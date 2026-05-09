@@ -56,17 +56,17 @@ function App() {
 
       <div className="control-panel">
         <div className="input-group">
-          <label>Patient Age: {config.age}</label>
+          <label>Patient Age <span>{config.age}</span></label>
           <input type="range" min="30" max="80" value={config.age} 
             onChange={e => setConfig({...config, age: parseInt(e.target.value)})} />
         </div>
         <div className="input-group">
-          <label>BMI: {config.bmi.toFixed(1)}</label>
+          <label>BMI <span>{config.bmi.toFixed(1)}</span></label>
           <input type="range" min="18" max="42" step="0.1" value={config.bmi} 
             onChange={e => setConfig({...config, bmi: parseFloat(e.target.value)})} />
         </div>
         <div className="input-group">
-          <label>HLA Risk Factor: {config.hla_risk.toFixed(2)}</label>
+          <label>HLA Risk Factor <span>{config.hla_risk.toFixed(2)}</span></label>
           <input type="range" min="0" max="1" step="0.05" value={config.hla_risk} 
             onChange={e => setConfig({...config, hla_risk: parseFloat(e.target.value)})} />
         </div>
@@ -116,23 +116,31 @@ function App() {
 
             <div className="metrics-grid">
               <div className="metric-box success">
-                <Activity size={20} />
-                <span>Efficacy</span>
+                <div className="metric-header">
+                  <Activity size={18} />
+                  <span>Efficacy</span>
+                </div>
                 <strong>{(selectedRegimen.efficacy * 100).toFixed(1)}%</strong>
               </div>
               <div className="metric-box warning">
-                <ShieldAlert size={20} />
-                <span>Toxicity</span>
+                <div className="metric-header">
+                  <ShieldAlert size={18} />
+                  <span>Toxicity</span>
+                </div>
                 <strong>{(selectedRegimen.toxicity * 100).toFixed(1)}%</strong>
               </div>
               <div className="metric-box info">
-                <Zap size={20} />
-                <span>PK Mismatch</span>
+                <div className="metric-header">
+                  <Zap size={18} />
+                  <span>PK Mismatch</span>
+                </div>
                 <strong>{(selectedRegimen.pk_mismatch * 100).toFixed(1)}%</strong>
               </div>
               <div className="metric-box danger">
-                <AlertTriangle size={20} />
-                <span>DDI Risk</span>
+                <div className="metric-header">
+                  <AlertTriangle size={18} />
+                  <span>DDI Risk</span>
+                </div>
                 <strong>{(selectedRegimen.ddi * 100).toFixed(1)}%</strong>
               </div>
             </div>

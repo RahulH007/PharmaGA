@@ -17,9 +17,6 @@ try:
 except ImportError:
     _LGB_OK = False
 
-# ──────────────────────────────────────────────────────
-# Data structures
-# ──────────────────────────────────────────────────────
 
 @dataclass
 class Drug:
@@ -45,9 +42,6 @@ class PatientProfile:
     genomic_vector: np.ndarray = None
 
 
-# ──────────────────────────────────────────────────────
-# Synthetic data generators
-# ──────────────────────────────────────────────────────
 
 def generate_drug_library(n_drugs=200, n_targets=40, seed=42):
     rng = np.random.default_rng(seed)
@@ -79,9 +73,6 @@ def generate_patient(patient_id, indication='HTN', seed=None):
     )
 
 
-# ──────────────────────────────────────────────────────
-# Oracle fitness
-# ──────────────────────────────────────────────────────
 
 def oracle_fitness(regimen, patient):
     if not regimen:
@@ -127,9 +118,6 @@ def encode_regimen(regimen, patient, max_k=4):
     return np.array(vec)
 
 
-# ──────────────────────────────────────────────────────
-# Surrogate
-# ──────────────────────────────────────────────────────
 
 class GBSurrogate:
     def __init__(self):
@@ -170,9 +158,6 @@ class GBSurrogate:
         return mid, np.abs(hi-lo)
 
 
-# ──────────────────────────────────────────────────────
-# MCX crossover
-# ──────────────────────────────────────────────────────
 
 def _cluster_by_targets(drugs):
     visited=set(); clusters=[]
@@ -205,9 +190,6 @@ def mcx(p1, p2, max_k=4):
     return c1 or list(p1[:1]), c2 or list(p2[:1])
 
 
-# ──────────────────────────────────────────────────────
-# Mutation
-# ──────────────────────────────────────────────────────
 
 def _tanimoto(a,b):
     ab=float(np.dot(a,b))
@@ -235,9 +217,6 @@ def mutate(regimen, library, dose_bins=5, pm=0.15):
     return reg
 
 
-# ──────────────────────────────────────────────────────
-# Pareto utilities
-# ──────────────────────────────────────────────────────
 
 def dominates(a,b):
     return bool(np.all(a<=b) and np.any(a<b))
@@ -276,9 +255,6 @@ def crowding_dist(front, F):
     return dist
 
 
-# ──────────────────────────────────────────────────────
-# PharmaGA
-# ──────────────────────────────────────────────────────
 
 class PharmaGA:
     def __init__(self, drug_library, mu=50, lam=50, max_generations=80,
